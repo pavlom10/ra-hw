@@ -8,8 +8,22 @@ export default function StepsList(props) {
     
     const del = '✗';
 
+    // sort
+    const compare = (a, b) => {
+        if (a.date < b.date ) {
+            return -1;
+        }
+        if (a.date > b.date) {
+            return 1;
+        }
+
+        return 0;
+      }
+
+    let sortedSteps = steps.sort(compare);            
+
     return (
-        <ul>{steps.map(item =>
+        <ul>{sortedSteps.map(item =>
                 <li key={item.id}>{item.date} {item.km} <button onClick={() => onDelete(item.id)}>{del}</button></li>)
             }
         </ul>            

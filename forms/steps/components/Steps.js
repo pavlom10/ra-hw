@@ -15,7 +15,7 @@ export default function Steps(props) {
 
             let updated = false;
 
-            prevSteps = prevSteps.map(item => {
+            let newList = prevSteps.map(item => {
 
                 if (item.date === form.date) {
                     updated = true;
@@ -26,29 +26,21 @@ export default function Steps(props) {
 
             });            
 
-            const compare = (a, b) => {
-                if (a.date < b.date ) {
-                    return -1;
-                }
-                if (a.date > b.date) {
-                    return 1;
-                }
-                return 0;
-              }
-
             if (!updated) {
-                prevSteps = [...prevSteps, form];
+                newList = [...prevSteps, form];
             }
 
-            return prevSteps.sort(compare);            
+            return newList;
 
         });
+
         
     }
 
     const handleDelete = id => {
         setSteps(steps.filter(item => item.id !== id));
     }    
+
     
     return (
         <>

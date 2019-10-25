@@ -3,30 +3,42 @@ import React, {useState} from 'react';
 export default function Hex2rgb(props) {
 
     const [form, setForm] = useState({
-        color: '',
-        rgb: '',
-        bgColor: '#fff'
+        color: ''
+    });
+
+    const [bgColor, setBgColor] = useState({
+        color: '#fff'
+    });
+
+    const [result, setResult] = useState({
+        rgb: ''
     });
 
     const handleColorChange = ({target}) => {
 
         let hex = target.value;
-        let rgb = '';
-        let bgColor = '#fff';
 
-        if (hex.length >= 7) {
+        setForm(prevForm => ({...prevForm, color: hex}));
+
+        // if (hex.length >= 7) {
 
             let result = hex2rgb(hex);
 
             if (!result) {
-                rgb = 'Ошибка!';
-            } else {
-                rgb = 'rgb(' + result.r + ', ' + result.g + ', ' + result.b + ')';
-                bgColor = hex;
-            }
-        }
 
-        setForm(prevForm => ({...prevForm, color: hex, rgb: rgb, bgColor: bgColor}));
+                setResult({rgb: 'Ошибка!'});
+                setBgColor({color: '#fff'});
+
+            } else {
+                let rgb = 'rgb(' + result.r + ', ' + result.g + ', ' + result.b + ')';
+
+                setResult({rgb: rgb});
+                setBgColor({color: hex});
+
+            }
+        // }
+
+        
 
     }
 
@@ -43,9 +55,9 @@ export default function Hex2rgb(props) {
     }
 
     return (
-        <div style={{backgroundColor: form.bgColor}}>
+        <div style={{backgroundColor: bgColor.color}}>
             <input type="text" name="color" value={form.color} onChange={handleColorChange} />
-            <div className="result">{form.rgb}</div>
+            <div className="result">{result.rgb}</div>
         </div>
     )
 }
